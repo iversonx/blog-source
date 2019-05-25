@@ -1,0 +1,33 @@
+1. SqlSessionFactory初始化过程也是mybatis初始化过程，其内容是通过解析mybatis-config.xml文件来组装Configuration对象。mybaits所有的配置都封装在Configuration对象中。
+
+
+mybatis配置元素与Configuration对象属性的对应
+
+<properties> -> Properties variables
+
+<settings>
+
+<typeAliases> -> TypeAliasRegistry
+
+<plugins> -> InterceptorChain interceptorChain
+
+<objectFactory> -> ObjectFactory objectFactory
+
+<objectWrapperFactory> -> ObjectWrapperFactory objectWrapperFactory
+
+<reflectorFactory> -> ReflectorFactory reflectorFactory
+
+
+<environments> -> Environment environment
+
+
+<typeHandlers> -> TypeHandlerRegistry 
+
+<mappers> -> MapperRegistry mapperRegistry
+
+
+此过程SqlSessionFactoryBuilder最终交由XMLConfigBuilder来完成。XMLConfigBuilder在解析完配置文件后，会返回Configuration对象；
+SqlSessionFactoryBuilder根据Configuration对象实例化一个DefaultSqlSessionFactory。
+
+
+

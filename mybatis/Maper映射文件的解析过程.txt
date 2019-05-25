@@ -1,0 +1,46 @@
+XMLMapperBuilder
+MapperBuilderAssistant
+ParameterMap
+ParameterMapping
+ResultMap
+ResultMapping
+XMLStatementBuilder
+
+
+XML映射文件顶级元素 Configuration的属性对应
+<cache> - Map<String, Cache> caches
+<cache-ref> - Map<String, String> cacheRefMap
+<resultMap> - Map<String, ResultMap> resultMaps 
+<parameterMap> - Map<String, ParameterMap> parameterMaps
+<sql> - Map<String, XNode> sqlFragments
+<insert> - Map<String, MappedStatement> mappedStatements
+<update> - Map<String, MappedStatement> mappedStatements
+<delete> - Map<String, MappedStatement> mappedStatements
+<select> - Map<String, MappedStatement> mappedStatements
+
+
+对cache元素的解析
+
+
+对cache-ref元素的解析
+
+
+对resultMap元素的解析
+1. 获取<resultMap>元素的id,type,extends,autoMapping属性
+2. 遍历所有的子元素
+3. 获取元素属性。注：根据javaType获取对应的typeHandler，由此可见，我们在指定javaType时，mybatis都是采用TypeHandler来处理
+4. 调用builderAssistant.buildResultMapping, 
+
+对parameterMap元素的解析
+
+对sql元素的解析
+
+对insert元素的解析
+
+对update元素的解析
+
+对delete元素的解析
+
+对select元素的解析
+
+
