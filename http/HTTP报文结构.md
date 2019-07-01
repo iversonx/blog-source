@@ -27,8 +27,6 @@ Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/a
 Accept-Encoding: gzip, deflate, br
 
 Accept-Language: zh-CN,zh;q=0.9
-
-
 ```
 
 HTTP 协议的请求报文和响应报文的结构基本相同，由三大部分组成：
@@ -44,8 +42,6 @@ HTTP 协议的请求报文和响应报文的结构基本相同，由三大部分
 ```http
 GET / HTTP/1.1
 ```
-
-
 
 请求报文的起始行，也称为请求行，描述了客户端想要如何操作服务器的资源。
 
@@ -64,8 +60,6 @@ GET / HTTP/1.1
 ```http
 HTTP/1.1 404 Not Found
 ```
-
-
 
 响应报文的起始行，也称为状态，它表示了服务器的响应状态。
 
