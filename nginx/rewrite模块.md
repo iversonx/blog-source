@@ -75,14 +75,91 @@ if指令的条件表达式
 
 - 检查是否为可执行文件, 使用`-x`和`!-x`
 
+```nginx
+# 示例
+if($variable){
+    
+}
 
+# 使用变量与正则表达式匹配
+if($variable ~ '^rewrite\.lijie\.com$'){}
+
+# 检查文件是否存在
+if(-f '/nginx.conf'){}
+
+```
 
 ### return
 
+停止处理并返回指定code到客户端。非标准状态码444用于在不发送响应头的情况下关闭连接。可以有以下3种语法
+
+```nginx
+# 指定code和响应文本
+return code [text];
+# 指定code和重定向URL
+return code URL;
+# 指定重定向URL
+return URL;
+# 作用域 server,location,if
+```
+
+- 当return后面指定code为301,302,303,307,308时，第二个参数则一定会被当作一个URL；
+
+- 当code为其他值时，第二个参数被当做响应文本;
+
+- 当采用第三种语法时，nginx默认使用的http code为302，对请求进行临时重定向。
+
 ### rewrite
+
+```nginx
+rewrite regex replacement [flag];
+# 作用域 server, location, if
+```
+
+如果指定的正则表达式与请求URI匹配，则替换成replacement指定的新的url。
+
+`rewrite`指令按照它们在配置文件中的出现顺序执行。
+
+如果replacement以`http://`,`https://`,`$scheme`开头，则 直接返回302重定向。
+
+flag参数可以是以下几个值:
+
+- last 根据新的URL重新在配置文件中进行匹配
+
+- break 停止当前脚本指令的执行，等同于break指令
+
+- redirect 返回302重定向
+
+- permanent 返回301重定向
+
+```nginx
+
+```
 
 ### rewrite_log
 
+开启或关闭`rewrite`模块指令执行的日志，如果开启，则重写将记录下`notice`等级的日志到nginx的error_log中，默认为off
+
+```nginx
+rewrite_log on | off;
+# 作用域 http, server, location, if
+```
+
 ### set
 
+设置变量
+
+```nginx
+set $variable value;
+# 作用域 server, location, if
+```
+
 ### uninitialized_variable_warn
+
+控制是否记录有关未初始化变量的警告。
+
+```nginx
+uninitialized_variable_warn on | off;
+# 默认为on
+# 作用域 http, server, location ,if
+```
