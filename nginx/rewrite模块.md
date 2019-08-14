@@ -78,7 +78,7 @@ if指令的条件表达式
 ```nginx
 # 示例
 if($variable){
-    
+
 }
 
 # 使用变量与正则表达式匹配
@@ -86,7 +86,6 @@ if($variable ~ '^rewrite\.lijie\.com$'){}
 
 # 检查文件是否存在
 if(-f '/nginx.conf'){}
-
 ```
 
 ### return
