@@ -37,5 +37,3 @@ location / {
     deny all;
 }
 ```
-
-
