@@ -27,29 +27,29 @@ description:
 ```java
 <dependency>
 
-	<groupId>org.springframework.security</groupId>
+    <groupId>org.springframework.security</groupId>
 
-	<artifactId>spring-security-web</artifactId>
+    <artifactId>spring-security-web</artifactId>
 
-	<version>4.2.10.RELEASE</version>
-
-</dependency>
-
-<dependency>
-	<groupId>org.springframework.security</groupId>
-
-	<artifactId>spring-security-config</artifactId>
-
-	<version>4.2.10.RELEASE</version>
+    <version>4.2.10.RELEASE</version>
 
 </dependency>
 
 <dependency>
-	<groupId>org.springframework.security.oauth</groupId>
+    <groupId>org.springframework.security</groupId>
 
-	<artifactId>spring-security-oauth2</artifactId>
+    <artifactId>spring-security-config</artifactId>
 
-	<version>2.2.0.RELEASE</version>
+    <version>4.2.10.RELEASE</version>
+
+</dependency>
+
+<dependency>
+    <groupId>org.springframework.security.oauth</groupId>
+
+    <artifactId>spring-security-oauth2</artifactId>
+
+    <version>2.2.0.RELEASE</version>
 
 </dependency>
 ```
@@ -113,7 +113,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         tokenServices.setTokenStore(tokenStore);
         // 支持刷新token
         tokenServices.setSupportRefreshToken(true);
-      
+
 
         // 设置token的有效期,单位是秒，这里配置了60s
 
@@ -179,7 +179,6 @@ CREATE TABLE `oauth_refresh_token` (
 ```sql
 INSERT INTO `oauth_client_details` ( `client_id`, `client_secret`, `scope`, `authorized_grant_types`, `authorities`, `autoapprove` )
 VALUES( 'app', '123456', 'all', 'password,refresh_token', '{}', 'true' );
-
 ```
 
 #### 2.2.2 资源服务器
@@ -203,7 +202,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 }
 ```
 
-#### 2.2.3 WebSecurityConfig
+#### 2.2.3 WebSecurityConfig
 
 因为我们Web端和APP 接口在同一个工程中，因此为了不影响Web端，需要增加以下配置
 
@@ -233,15 +232,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() 
-        throws Exception {
+        throws Exception {
         AuthenticationManager authenticationManager 
-            = super.authenticationManagerBean();
+            = super.authenticationManagerBean();
         return authenticationManager;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) 
-        throws Exception {
+        throws Exception {
         // 指定加载用户数据的接口
 
         auth.userDetailsService(userService);
@@ -255,7 +254,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 ```java
 public class UserPrincipal implements UserDetails {
     private static final long 
-        serialVersionUID = 5564363430024390596L;
+        serialVersionUID = 5564363430024390596L;
     // 系统原先的用户信息类
     // 自定义    
 
@@ -267,13 +266,13 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> 
-        getAuthorities() {
+        getAuthorities() {
         // 该用户拥有的权限
         // 权限通常从数据库获取
         // 如果没有返回null或空list
 
         List<GrantedAuthority> authorities = 
-            new ArrayList<GrantedAuthority>();
+            new ArrayList<GrantedAuthority>();
         return authorities;
     }
 
@@ -319,7 +318,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserService userService;
     @Override
     public UserDetails loadUserByUsername(String username) 
-        throws UsernameNotFoundException {
+        throws UsernameNotFoundException {
         // 这里需要自己定义根据用户名从数据库获取用户信息包括存储的密码
         // Security会对用户密码进行校验
 
@@ -338,20 +337,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 ```xml
 <filter>
-	<filter-name>springSecurityFilterChain</filter-name>
+    <filter-name>springSecurityFilterChain</filter-name>
 
-	<filter-class>
-    	  org.springframework.web.filter.DelegatingFilterProxy    
-    </filter-class>
+    <filter-class>
+          org.springframework.web.filter.DelegatingFilterProxy    
+    </filter-class>
 
 </filter>
 
 
 <filter-mapping>
 
-	<filter-name>springSecurityFilterChain</filter-name>
+    <filter-name>springSecurityFilterChain</filter-name>
 
-	<url-pattern>/*</url-pattern>
+    <url-pattern>/*</url-pattern>
 
 </filter-mapping>
 ```
@@ -377,8 +376,6 @@ curl -X POST --user app:123456 http://localhost:8080/oauth/token
 这里`app:123456`是表`oauth_client_details`中`client_id`和`client_secret`字段的值。
 
 此时`oauth_access_token`和`oauth_refresh_token`表中会插入一条数据。
-
-
 
 然后在访问`/v1/**`请求时，将access_token带上,例如
 
@@ -406,11 +403,3 @@ curl -X POST --user app:123456 http://localhost:8080/oauth/token
     "scope": "all"
 }
 ```
-
-
-
-
-
-
-
-
